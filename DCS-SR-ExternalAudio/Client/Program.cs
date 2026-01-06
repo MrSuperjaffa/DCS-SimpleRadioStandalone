@@ -176,12 +176,10 @@ namespace Ciribob.DCS.SimpleRadio.Standalone.ExternalAudioClient.Client
                 HelpText = "Allow audio sent by ExternalAudio to be recorded by clients",
                 Required = false, Default = true)]
             public bool Record { get; set; }
-            // //
-            // // [Option( "IP",
-            // //     HelpText = "",
-            // //     Required = false, Default = "127.0.0.1")]
-            // public string IP { get; set; } = "127.0.0.1";
-
+             [Option('d', "IP",
+                 HelpText = "IP address of server to connect to",
+                 Required = false, Default = "127.0.0.1")]
+            public string IP { get; set; }
             [Option("unitId",
                 HelpText =
                     "Sets the Unit ID of the transmitter - if you set this to the same as an aircraft you can then communicate over intercom with that aircraft",

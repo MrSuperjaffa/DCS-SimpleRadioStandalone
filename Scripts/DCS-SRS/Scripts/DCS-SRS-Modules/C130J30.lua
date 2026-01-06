@@ -47,10 +47,12 @@ function exportRadioC130J30(_data, SR)
     _data.radios[4].name = "VHF1"
     _data.radios[4].freq = SR.getRadioFrequency(VHF1_devid) or 0
     _data.radios[4].modulation = SR.getRadioModulation(VHF1_devid) or 3
+    _data.radios[4].rxOnly = false
 
     _data.radios[5].name = "VHF2"
     _data.radios[5].freq = SR.getRadioFrequency(VHF2_devid) or 0
     _data.radios[5].modulation = SR.getRadioModulation(VHF2_devid) or 3
+    _data.radios[5].rxOnly = false
 
     _data.radios[6].name = "HF1"
     _data.radios[6].freq = SR.getRadioFrequency(HF1_devid) or 0

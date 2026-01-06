@@ -2,6 +2,7 @@
 
 using System;
 using System.Net;
+using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Caliburn.Micro;
@@ -49,7 +50,19 @@ public class ExternalAudioClient : IHandle<TCPClientStatusMessage>
         encryptionBytes = new byte[modulation.Length];
         for (var i = 0; i < encryptionBytes.Length; i++) encryptionBytes[i] = 0;
         
-        endPoint = new IPEndPoint(IPAddress.Loopback, opts.Port);
+        var endAddress = IPAddress.Loopback;
+        try
+        {
+            var addresses = Dns.GetHostAddresses(opts.IP);
+            if (addresses.Length > 0) {
+                endAddress = addresses[0];
+            } 
+        } catch (SocketException)
+        {
+            Logger.Error($"Could not resolve hostname: {opts.IP}");
+        }
+        
+        endPoint = new IPEndPoint(endAddress, opts.Port);
         
         EventBus.Instance.SubscribeOnUIThread(this);
     }
