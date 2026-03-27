@@ -87,8 +87,22 @@ function exportRadioJF17(_data, SR)
         elseif string.match(ufcp[1], "^DATA") then
             displayedRadio.enc = false
             displayedRadio.encKey = nil
-            -- Forcibly set to DISABLED - Datalink has the radio, can't talk on it!
-            displayedRadio.modulation = 3
+
+            if string.match(ufcp[3], "^NE[S+]") then
+                local _datalink = GetDevice(27)
+
+                if _datalink:is_dl_grp_valid() then
+                    local _stncode = _datalink:get_dl_stn_code()
+
+                    local _dlchannel = tonumber((string.sub(comm2Channel, 1, 1)) .. _stncode)
+
+                    displayedRadio.modulation = 6
+                    displayedRadio.channel = _dlchannel
+                end
+            else
+                -- Forcibly set to DISABLED - Datalink has the radio, can't talk on it!
+                displayedRadio.modulation = 3
+            end
         end
 
         -- Look at line 2 for RT+G.
